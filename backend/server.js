@@ -1,11 +1,23 @@
 import express from 'express';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
+app.get("/api/auth/signup", (req, res) => {
+    res.send("Signup endpoint");
 });
 
-app.listen(5001, () => {
-    console.log("Server is running on port 5001");
-})
+app.get("/api/auth/login", (req, res) => {
+    res.send("Login endpoint");
+});
+
+app.get("/api/auth/logout", (req, res) => {
+    res.send("Logout endpoint");
+});
+
+app.listen (PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
