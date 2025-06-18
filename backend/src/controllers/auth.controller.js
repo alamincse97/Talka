@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 
 export async function signup(req, res) {
-    const {email, password, fullName} = req.body;
+    const {email, password, fullName, username} = req.body;
 
     try{
         if(!email || !password || !fullName) {
@@ -30,9 +30,10 @@ export async function signup(req, res) {
 
         const randomAvatar = `https://avatar.iran.liara.run/public/${idx}.png`;
 
-        const newUser = new User.create({
+        const newUser = await User.create({
             email,
             fullName,
+            username,
             password,
             profilePic: randomAvatar,
         });
