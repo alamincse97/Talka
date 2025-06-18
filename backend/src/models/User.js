@@ -46,8 +46,6 @@ const userSchema = new mongoose.Schema({
     }],
 }, {timestamps: true});
 
-const User = mongoose.model('User', userSchema);
-
 // pre hook
 // john@gmail.com 12345678
 
@@ -65,5 +63,12 @@ userSchema.pre('save', async function(next) {
         next(error);
     }
 });
+
+userSchema.methods.matchPassword = async function(enteredPassword){
+    const isPasswordCorrect = await bcrypt.compare(enteredPassword, this.password);
+    return isPasswordCorrect;
+};
+
+const User = mongoose.model('User', userSchema);
 
 export default User;    
