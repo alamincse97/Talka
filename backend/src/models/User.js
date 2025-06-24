@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
-    username: {
+    fullName: {
         type: String,
         required: true,
     },
@@ -49,6 +49,7 @@ const userSchema = new mongoose.Schema({
 // pre hook
 // john@gmail.com 12345678
 
+const User = mongoose.model("User", userSchema);
 
 // TODO: Explain this once again pre hook
 userSchema.pre('save', async function(next) {
@@ -69,6 +70,5 @@ userSchema.methods.matchPassword = async function(enteredPassword){
     return isPasswordCorrect;
 };
 
-const User = mongoose.model('User', userSchema);
 
 export default User;    
