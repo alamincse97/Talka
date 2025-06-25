@@ -49,7 +49,6 @@ const userSchema = new mongoose.Schema({
 // pre hook
 // john@gmail.com 12345678
 
-const User = mongoose.model("User", userSchema);
 
 // TODO: Explain this once again pre hook
 userSchema.pre('save', async function(next) {
@@ -65,10 +64,11 @@ userSchema.pre('save', async function(next) {
     }
 });
 
-userSchema.methods.matchPassword = async function(enteredPassword){
-    const isPasswordCorrect = await bcrypt.compare(enteredPassword, this.password);
-    return isPasswordCorrect;
+/** ✅ INSTANCE METHOD: Compare password */
+userSchema.methods.matchPassword = async function(enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
 };
 
-
+/** ✅ DEFINE MODEL AFTER HOOKS AND METHODS */
+const User = mongoose.model("User", userSchema);
 export default User;    
